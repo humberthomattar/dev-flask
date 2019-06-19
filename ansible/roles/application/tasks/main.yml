@@ -10,8 +10,8 @@
   
   - name: Install requirements
     pip: 
-      requirements: "/home/vagrant/{{ app_name }}/app/requirements.txt"
-      virtualenv: "/home/vagrant/{{ app_name }}/env"
+      requirements: "/home/vagrant/{{ app_name }}/requirements.txt"
+      virtualenv: "/home/vagrant/flask-env"
     become: yes
     become_user: vagrant
   

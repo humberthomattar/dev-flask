@@ -1,6 +1,6 @@
 ---
   app:
-    name: "template"
+    name: "skeleton-flask"
     version: 0.1
     first_words: "It Works!"
 

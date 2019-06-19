@@ -26,6 +26,7 @@ def info():
     }
     return json.dumps(mensagem)
 
+
 @app.errorhandler(400)
 def bad_request(e):
     mensagem = {
