@@ -1,27 +1,28 @@
 #!/usr/bin/python
 # coding: utf-8
-""" Filename:     views.py
-    Purpose:      This file is one of the views file that can contain the
+""" Filename:     controllers.py
+    Purpose:      This file is one of the controllers file that can contain the
                   routes for the application
     Requirements: 
-    Author:       Cédric Beuzit
+    Author:       Humbertho Mattar
 """
 from webapp import app
+import json
 
 # importing application wide parameters and global variables that have been
 # defined in __init__.py
 
 @app.route('/', methods=['GET', 'HEAD'])
 def webapp():
-    message = app.config['HELLO']
+    message = app.config['app']['first_words']
     return message
 
 
 @app.route('/info/', methods=['GET', 'HEAD'])
 def info():
     mensagem = {
-        'nome da aplicacao': app.config['APP_NAME'],
-        'versao': app.config['VERSION']
+        'nome da aplicacao': app.config['app']['name'],
+        'versao': app.config['app']['version']
     }
     return json.dumps(mensagem)
 

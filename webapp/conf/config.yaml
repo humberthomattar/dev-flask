@@ -1,6 +1,7 @@
 ---
-  APP_NAME: "template"
-  VERSION: 0.1
-  HELLO: "ola"
+  app:
+    name: "template"
+    version: 0.1
+    first_words: "It Works!"
 
   

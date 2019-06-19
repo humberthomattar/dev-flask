@@ -5,8 +5,8 @@
                   package, to be able to define routes in multiple modules.
                   This is the most basic design pattern for multiple files
                   Flask apps: http://flask.pocoo.org/docs/patterns/packages/
-    Requirements: 
-    Author:       Cédric Beuzit
+    Requirements: see requirements.txt 
+    Author:             Humbertho Mattar      
 """
 import yaml
 import logging
@@ -18,7 +18,6 @@ app = Flask(__name__)
 # application wide global variables and config parameters must be defined here
 # (not in `run.py`) for being able to import them in the beginning of the
 # views files but we can perfectly imagine a smarter config procedure
-#app.config['HELLO_WORLD'] = 'Hello Flask!'
 
 def setup_logging(loggername, path, default_level='DEBUG'):
     import coloredlogs
@@ -54,9 +53,8 @@ def get_conf(file):
 setup_logging(loggername='app', path='./webapp/conf/logging.yaml')
 get_conf('./webapp/conf/config.yaml')
 
-logger.debug(str(app.config['HELLO']))
 
 # The views modules that contain the application's routes are imported here
 # Importing views modules MUST BE in the end of the file to avoid problems
 # related to circular imports http://flask.pocoo.org/docs/patterns/packages
-import webapp.views
+import webapp.controllers

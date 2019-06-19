@@ -1,17 +1,17 @@
 ---
-  - name: APP | Clone project
-    git:
-      repo: https://github.com/humberthomattar/dev-flask.git
-      dest: "/home/vagrant/flask/app/"
-      clone: yes
-      update: yes
-    become: yes
-    become_user: vagrant
+  #- name: APP | Clone project
+  #  git:
+  #    repo: https://github.com/humberthomattar/dev-flask.git
+  #    dest: "/home/vagrant/flask/{{ app_name }}/app"
+  #    clone: yes
+  #    update: yes
+  #  become: yes
+  #  become_user: vagrant
   
   - name: Install requirements
     pip: 
-      requirements: "/home/vagrant/flask/app/requirements.txt"
-      virtualenv: "/home/vagrant/flask/"
+      requirements: "/home/vagrant/{{ app_name }}/app/requirements.txt"
+      virtualenv: "/home/vagrant/{{ app_name }}/env"
     become: yes
     become_user: vagrant
   
