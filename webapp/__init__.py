@@ -22,8 +22,8 @@ app = Flask(__name__)
 
 def setup_logging(loggername, path='./conf/logging.yaml', default_level='DEBUG'):
     import coloredlogs
+    global logger
     try:
-        global logger
         with open(path, 'rt') as f:    
             config = yaml.safe_load(f.read())
             logging.config.dictConfig(config)
@@ -34,6 +34,7 @@ def setup_logging(loggername, path='./conf/logging.yaml', default_level='DEBUG')
     except Exception as e:
         print(str(e) + 'Erro na configuracao do Log. Usando configuracao padrao')
         logging.basicConfig(level=default_level)
+        logger = logging.getLogger(loggername)
         coloredlogs.install(level=default_level)
     return
 

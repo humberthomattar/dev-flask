@@ -1,5 +1,7 @@
 ---
 - name: PIP | Install Virtualenv
+  become: yes
+  become_user: root
   pip:
     name: 
       - virtualenv

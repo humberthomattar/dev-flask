@@ -1,9 +1,13 @@
 ---
   - name: set timezone to America/Sao_Paulo
+    become: yes
+    become_user: root
     timezone:
       name: America/Sao_Paulo
   
   - name: Default | Install default packages
+    become: yes
+    become_user: root
     apt:
       name: 
         - git
