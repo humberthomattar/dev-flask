@@ -20,7 +20,7 @@ app = Flask(__name__)
 # views files but we can perfectly imagine a smarter config procedure
 #app.config['HELLO_WORLD'] = 'Hello Flask!'
 
-def setup_logging(loggername, path='./conf/logging.yaml', default_level='DEBUG'):
+def setup_logging(loggername, path, default_level='DEBUG'):
     import coloredlogs
     global logger
     try:
@@ -32,19 +32,18 @@ def setup_logging(loggername, path='./conf/logging.yaml', default_level='DEBUG')
             logger.debug('Logger configurado corretamente. => log level: ' +  
                 str(logger.level) + ' ' + str(path))
     except Exception as e:
-        print(str(e) + 'Erro na configuracao do Log. Usando configuracao padrao')
+        print(str(e) + '=> Erro na configuracao do Log. Usando configuracao padrao')
         logging.basicConfig(level=default_level)
         logger = logging.getLogger(loggername)
         coloredlogs.install(level=default_level)
     return
 
 
-def get_conf(file='./conf/config.yaml'):
+def get_conf(file):
     try:
         logger.debug('Recuperando as configuracoes da rotina => ' + str(file))
         with open(file, 'r') as ymlfile:
             cfg = yaml.safe_load(ymlfile)
-        #globals().update(cfg)
         app.config.update(cfg)
         logger.debug('Configuracoes recuperadas com sucesso. => ' + str(cfg))
     except Exception as e:
@@ -52,9 +51,10 @@ def get_conf(file='./conf/config.yaml'):
     return
 
 
-setup_logging(loggername='app', path='./conf/logging.yaml')
-get_conf(file='./conf/config.yaml')
+setup_logging(loggername='app', path='./webapp/conf/logging.yaml')
+get_conf('./webapp/conf/config.yaml')
 
+logger.debug(str(app.config['HELLO']))
 
 # The views modules that contain the application's routes are imported here
 # Importing views modules MUST BE in the end of the file to avoid problems
