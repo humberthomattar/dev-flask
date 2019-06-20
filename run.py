@@ -3,10 +3,15 @@
 """ Filename:     run.py
     Purpose:      This file runs the Flask application service
     Requirements: Flask
-    Author:       Cédric Beuzit
+    Author:       Humbertho Mattar
 """
 from webapp import app
 
 
+
+# TODO: External host and port
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(
+        host=app.config.get('HOST', '0.0.0.0'),
+        port=app.config.get('PORT', 5000)
+    )

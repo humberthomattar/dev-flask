@@ -6,24 +6,27 @@
     Requirements: 
     Author:       Humbertho Mattar
 """
-from webapp import app
 import json
+from webapp import logger
+from webapp import app
+
 
 # importing application wide parameters and global variables that have been
 # defined in __init__.py
 
 @app.route('/', methods=['GET', 'HEAD'])
 def webapp():
-    message = app.config['app']['first_words']
+    message = app.config['HELLO_MESSAGE']
     return message
 
 
 @app.route('/info/', methods=['GET', 'HEAD'])
 def info():
     mensagem = {
-        'nome da aplicacao': app.config['app']['name'],
-        'versao': app.config['app']['version']
+        'nome da aplicacao': app.config['APP_NAME'],
+        'versao': app.config['VERSION']
     }
+    logger.debug('Informação enviada com sucesso!')
     return json.dumps(mensagem)
 
 

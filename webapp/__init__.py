@@ -8,10 +8,12 @@
     Requirements: see requirements.txt 
     Author:             Humbertho Mattar      
 """
-import yaml
+import os
 import logging
 from flask import Flask
-from logging.config import fileConfig
+from logging.config import dictConfig
+from webapp.conf.logging import logging_config
+
 
 app = Flask(__name__)
 
@@ -19,39 +21,23 @@ app = Flask(__name__)
 # (not in `run.py`) for being able to import them in the beginning of the
 # views files but we can perfectly imagine a smarter config procedure
 
-def setup_logging(loggername, path, default_level='DEBUG'):
-    import coloredlogs
-    global logger
-    try:
-        with open(path, 'rt') as f:    
-            config = yaml.safe_load(f.read())
-            logging.config.dictConfig(config)
-            logger = logging.getLogger(loggername)
-            coloredlogs.install(logger=logger, level=logger.level)
-            logger.debug('Logger configurado corretamente. => log level: ' +  
-                str(logger.level) + ' ' + str(path))
-    except Exception as e:
-        print(str(e) + '=> Erro na configuracao do Log. Usando configuracao padrao')
-        logging.basicConfig(level=default_level)
-        logger = logging.getLogger(loggername)
-        coloredlogs.install(level=default_level)
-    return
+# Set log configurations
+try:
+    dictConfig(logging_config)
+    logger = logging.getLogger('app')
+    logger.debug('Logger configurado corretamente. => log level: ' +  str(logger.level))
+except Exception as e:
+    logging.basicConfig(level='DEBUG')
+    logger = logging.getLogger()
 
-
-def get_conf(file):
-    try:
-        logger.debug('Recuperando as configuracoes da rotina => ' + str(file))
-        with open(file, 'r') as ymlfile:
-            cfg = yaml.safe_load(ymlfile)
-        app.config.update(cfg)
-        logger.debug('Configuracoes recuperadas com sucesso. => ' + str(cfg))
-    except Exception as e:
-        logger.error('get_conf: ' + str(e))
-    return
-
-
-setup_logging(loggername='app', path='./webapp/conf/logging.yaml')
-get_conf('./webapp/conf/config.yaml')
+#  set general configurations
+#  export FLASK_ENV=development && export FLASK_APP=webapp
+if os.environ.get("FLASK_ENV") == 'development':
+    app.config.from_object('webapp.conf.config.DevelopmentConfig')
+    logger.debug('Utilizando configuracoes do ambiente de DESENVOLVIMENTO')
+else:
+    app.config.from_object('webapp.conf.config.BaseConfig')
+    logger.debug('Utilizando configuracoes do ambiente de PRODUCAO')
 
 
 # The views modules that contain the application's routes are imported here

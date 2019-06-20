@@ -7,7 +7,7 @@ box_distribution = "bionic"
 vm_name = "dev-flask"
 sync_dir = "/home/vagrant/" + vm_name + "/"
 ansible_dir = "/home/vagrant/" + vm_name + "/ansible/"
-is_proxy = true
+is_proxy = false
 proxy_dtp = "http://prxdf.prevnet:3128/"
 
 
@@ -19,7 +19,7 @@ Vagrant.configure(api_version) do |config|
   config.vm.box_check_update = false
 
   # Avaliacao da existencia do proxy
-  if Vagrant.has_plugin?("vagrant-proxyconf") && is_proxy
+  if (Vagrant.has_plugin?("vagrant-proxyconf")) && is_proxy
     config.proxy.http   = proxy_dtp
     config.proxy.https  = proxy_dtp
   end
